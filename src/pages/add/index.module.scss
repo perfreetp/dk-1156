@@ -293,6 +293,13 @@
   color: $color-text-white;
 }
 
+.currentUser {
+  font-size: $font-size-sm;
+  color: $color-primary;
+  margin-bottom: $spacing-sm;
+  display: block;
+}
+
 .imageHint {
   font-size: $font-size-xs;
   color: $color-text-tertiary;

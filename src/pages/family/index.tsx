@@ -1,11 +1,16 @@
 import React from 'react';
 import { View, Text, Image, ScrollView } from '@tarojs/components';
 import Taro from '@tarojs/taro';
-import { useMembers } from '../../hooks/useItems';
+import { useDidShow } from '@tarojs/taro';
+import { useAppContext } from '../../store/AppContext';
 import styles from './index.module.scss';
 
 const FamilyPage: React.FC = () => {
-  const { members } = useMembers();
+  const { members, refreshData } = useAppContext();
+
+  useDidShow(() => {
+    refreshData();
+  });
 
   const handleInvite = () => {
     Taro.showModal({

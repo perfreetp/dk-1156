@@ -1,11 +1,18 @@
 import React from 'react';
 import { View, Text, ScrollView } from '@tarojs/components';
-import { useTimeline } from '../../hooks/useItems';
+import { useDidShow } from '@tarojs/taro';
+import { useAppContext } from '../../store/AppContext';
 import TimelineItem from '../../components/TimelineItem';
 import styles from './index.module.scss';
 
 const TimelinePage: React.FC = () => {
-  const { timelineData, allItems } = useTimeline();
+  const { getTimelineData, refreshData } = useAppContext();
+
+  const timelineData = getTimelineData();
+
+  useDidShow(() => {
+    refreshData();
+  });
 
   return (
     <ScrollView className={styles.container} scrollY enableBackToTop>

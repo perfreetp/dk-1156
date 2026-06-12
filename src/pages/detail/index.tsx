@@ -1,17 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, Image, ScrollView, Input } from '@tarojs/components';
 import Taro, { useRouter } from '@tarojs/taro';
-import { useItems, useMembers } from '../../hooks/useItems';
+import { useAppContext } from '../../store/AppContext';
 import { DAMAGE_OPTIONS, Item } from '../../types';
 import styles from './index.module.scss';
 
 const DetailPage: React.FC = () => {
   const router = useRouter();
-  const { getItemById, updateItem, deleteItem } = useItems();
-  const { getMemberById, getCurrentMember } = useMembers();
+  const { getItemById, updateItem, deleteItem, addComment, currentMember, members } = useAppContext();
   const [item, setItem] = useState<Item | null>(null);
   const [newComment, setNewComment] = useState('');
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   useEffect(() => {
     const { id } = router.params;
@@ -25,17 +23,7 @@ const DetailPage: React.FC = () => {
 
   const handleShare = () => {
     if (!item) return;
-
-    Taro.showModal({
-      title: '分享物件',
-      content: `分享"${item.name}"给亲友查看`,
-      confirmText: '生成分享链接',
-      success: (res) => {
-        if (res.confirm) {
-          Taro.showToast({ title: '生成分享链接成功', icon: 'success' });
-        }
-      }
-    });
+    Taro.navigateTo({ url: `/pages/share/index?ids=${item.id}` });
   };
 
   const handleMakeCard = () => {
@@ -46,25 +34,13 @@ const DetailPage: React.FC = () => {
   const handleAddComment = () => {
     if (!item || !newComment.trim()) return;
 
-    const currentMember = getCurrentMember();
-    const updatedItem = updateItem(item.id, {
-      comments: [
-        ...item.comments,
-        {
-          id: Date.now().toString(),
-          memberId: currentMember.id,
-          memberName: currentMember.name,
-          content: newComment.trim(),
-          createdAt: new Date().toISOString().split('T')[0]
-        }
-      ]
-    });
-
+    addComment(item.id, newComment.trim());
+    const updatedItem = getItemById(item.id);
     if (updatedItem) {
       setItem(updatedItem);
-      setNewComment('');
-      Taro.showToast({ title: '评论已添加', icon: 'success' });
     }
+    setNewComment('');
+    Taro.showToast({ title: '评论已添加', icon: 'success' });
   };
 
   const handleDelete = () => {
@@ -95,6 +71,7 @@ const DetailPage: React.FC = () => {
   }
 
   const damageOption = DAMAGE_OPTIONS.find(d => d.value === item.damageLevel);
+  const isOwner = item.createdBy === currentMember?.id;
 
   const roomLabels: Record<string, string> = {
     livingRoom: '客厅',
@@ -207,7 +184,7 @@ const DetailPage: React.FC = () => {
           </View>
         ) : (
           item.comments.map(comment => {
-            const member = getMemberById(comment.memberId);
+            const member = members.find(m => m.id === comment.memberId);
             return (
               <View key={comment.id} className={styles.commentItem}>
                 <Image
@@ -227,24 +204,20 @@ const DetailPage: React.FC = () => {
           })
         )}
 
-        <View className={styles.addCommentBtn}>
+        <View className={styles.addCommentArea}>
           <Input
-            style={{ width: '100%', textAlign: 'center' }}
+            className={styles.commentInput}
             placeholder='添加回忆...'
             value={newComment}
             onInput={(e) => setNewComment(e.detail.value)}
-            onConfirm={handleAddComment}
           />
-        </View>
-        {newComment && (
           <View
-            className={styles.actionBtn}
-            style={{ marginTop: '16rpx', backgroundColor: '#8B7355' }}
+            className={styles.sendBtn}
             onClick={handleAddComment}
           >
-            <Text className={styles.actionText}>发布回忆</Text>
+            <Text className={styles.sendText}>发送</Text>
           </View>
-        )}
+        </View>
       </View>
 
       <View className={styles.bottomBar}>
@@ -255,6 +228,12 @@ const DetailPage: React.FC = () => {
           <Text className={styles.actionText}>制作纪念卡</Text>
         </View>
       </View>
+
+      {isOwner && (
+        <View className={styles.deleteBar} onClick={handleDelete}>
+          <Text className={styles.deleteText}>删除此物件</Text>
+        </View>
+      )}
 
       <View style={{ height: '100rpx' }} />
     </ScrollView>

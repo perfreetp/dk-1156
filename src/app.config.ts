@@ -7,7 +7,8 @@ export default defineAppConfig({
     'pages/profile/index',
     'pages/detail/index',
     'pages/card/index',
-    'pages/member-detail/index'
+    'pages/member-detail/index',
+    'pages/share/index'
   ],
   window: {
     backgroundTextStyle: 'light',

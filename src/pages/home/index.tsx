@@ -1,45 +1,44 @@
 import React, { useCallback } from 'react';
 import { View, Text, ScrollView } from '@tarojs/components';
 import { useDidShow } from '@tarojs/taro';
-import { useItems } from '../../hooks/useItems';
+import { useAppContext } from '../../store/AppContext';
 import ItemCard from '../../components/ItemCard';
 import FilterBar from '../../components/FilterBar';
 import styles from './index.module.scss';
 
 const HomePage: React.FC = () => {
-  const { filteredItems, filter, setFilter, getOverdueReminders } = useItems();
-  const [reminderCount, setReminderCount] = React.useState(0);
+  const { getFilteredItems, filter, setFilter, getOverdueReminders, refreshData } = useAppContext();
+
+  const filteredItems = getFilteredItems();
+  const reminders = getOverdueReminders();
 
   useDidShow(() => {
-    const overdue = getOverdueReminders();
-    setReminderCount(overdue.length);
+    refreshData();
   });
 
   const handleRefresh = useCallback(() => {
-    const overdue = getOverdueReminders();
-    setReminderCount(overdue.length);
-  }, [getOverdueReminders]);
+    refreshData();
+  }, [refreshData]);
 
   return (
     <ScrollView
       className={styles.container}
       scrollY
       enableBackToTop
-      onScrollToLower={handleRefresh}
     >
       <View className={styles.header}>
         <Text className={styles.title}>老物件档案</Text>
         <Text className={styles.subtitle}>珍藏家庭记忆，传承岁月故事</Text>
       </View>
 
-      {reminderCount > 0 && (
+      {reminders.length > 0 && (
         <View className={styles.reminderBanner}>
           <View className={styles.reminderIcon}>
             <Text style={{ color: '#fff', fontSize: '40rpx' }}>⏰</Text>
           </View>
           <View className={styles.reminderText}>
             <Text className={styles.reminderTitle}>复查提醒</Text>
-            <Text className={styles.reminderCount}>有 {reminderCount} 件物件需要复查</Text>
+            <Text className={styles.reminderCount}>有 {reminders.length} 件物件需要复查</Text>
           </View>
           <Text className={styles.reminderArrow}>›</Text>
         </View>

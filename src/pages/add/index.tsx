@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
 import { View, Text, Input, Textarea, Image, ScrollView } from '@tarojs/components';
 import Taro from '@tarojs/taro';
-import { useItems } from '../../hooks/useItems';
+import { useAppContext } from '../../store/AppContext';
 import { ERA_OPTIONS, ROOM_OPTIONS, DAMAGE_OPTIONS, VIEW_PERMISSION_OPTIONS } from '../../types';
 import styles from './index.module.scss';
 
 const AddPage: React.FC = () => {
-  const { addItem, getCurrentMember } = useItems();
-  const currentMember = getCurrentMember();
+  const { addItem, currentMember } = useAppContext();
 
   const [formData, setFormData] = useState({
     name: '',
@@ -33,13 +32,22 @@ const AddPage: React.FC = () => {
           ...prev,
           mainImage: res.tempFilePaths[0]
         }));
+      },
+      fail: () => {
+        Taro.showToast({ title: '请选择图片', icon: 'none' });
       }
     });
   };
 
   const handleChooseDetailImage = () => {
+    const remainCount = 5 - formData.detailImages.length;
+    if (remainCount <= 0) {
+      Taro.showToast({ title: '最多5张细节图', icon: 'none' });
+      return;
+    }
+
     Taro.chooseImage({
-      count: 5 - formData.detailImages.length,
+      count: remainCount,
       sizeType: ['compressed'],
       sourceType: ['album', 'camera'],
       success: (res) => {
@@ -47,6 +55,9 @@ const AddPage: React.FC = () => {
           ...prev,
           detailImages: [...prev.detailImages, ...res.tempFilePaths].slice(0, 5)
         }));
+      },
+      fail: () => {
+        Taro.showToast({ title: '请选择图片', icon: 'none' });
       }
     });
   };
@@ -59,7 +70,7 @@ const AddPage: React.FC = () => {
   };
 
   const handleSubmit = () => {
-    if (!formData.name) {
+    if (!formData.name.trim()) {
       Taro.showToast({ title: '请输入物件名称', icon: 'none' });
       return;
     }
@@ -93,6 +104,7 @@ const AddPage: React.FC = () => {
       <View className={styles.form}>
         <View className={styles.imageSection}>
           <Text className={styles.sectionTitle}>上传照片</Text>
+          <Text className={styles.currentUser}>当前建档人：{currentMember?.name || '未知'}</Text>
 
           <View className={styles.mainImage} onClick={handleChooseImage}>
             {formData.mainImage ? (

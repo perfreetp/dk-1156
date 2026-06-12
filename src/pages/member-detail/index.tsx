@@ -1,30 +1,24 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, Image, ScrollView } from '@tarojs/components';
 import Taro, { useRouter } from '@tarojs/taro';
-import { useMembers, useItems } from '../../hooks/useItems';
-import { FamilyMember, Item } from '../../types';
+import { useAppContext } from '../../store/AppContext';
+import { Item } from '../../types';
 import styles from './index.module.scss';
 
 const MemberDetailPage: React.FC = () => {
   const router = useRouter();
-  const { getMemberById } = useMembers();
-  const { items } = useItems();
-  const [member, setMember] = useState<FamilyMember | null>(null);
+  const { members, getMemberItems } = useAppContext();
   const [memberItems, setMemberItems] = useState<Item[]>([]);
+  const memberId = router.params.id || '';
+
+  const member = members.find(m => m.id === memberId);
 
   useEffect(() => {
-    const { id } = router.params;
-    if (id) {
-      const foundMember = getMemberById(id);
-      if (foundMember) {
-        setMember(foundMember);
-        const relatedItems = items.filter(item =>
-          item.familyMembers.includes(id) || item.createdBy === id
-        );
-        setMemberItems(relatedItems);
-      }
+    if (memberId) {
+      const items = getMemberItems(memberId);
+      setMemberItems(items);
     }
-  }, [router.params, getMemberById, items]);
+  }, [memberId, getMemberItems, members]);
 
   const handleItemClick = (itemId: string) => {
     Taro.navigateTo({ url: `/pages/detail/index?id=${itemId}` });
