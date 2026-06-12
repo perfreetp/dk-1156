@@ -1,0 +1,34 @@
+@use '@/styles/variables.scss' as *;
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.avatar {
+  border-radius: $radius-round;
+  background-color: $color-bg-hover;
+}
+
+.small {
+  width: 64rpx;
+  height: 64rpx;
+}
+
+.medium {
+  width: 96rpx;
+  height: 96rpx;
+}
+
+.large {
+  width: 160rpx;
+  height: 160rpx;
+}
+
+.name {
+  font-size: $font-size-sm;
+  color: $color-text-secondary;
+  margin-top: $spacing-xs;
+  text-align: center;
+}

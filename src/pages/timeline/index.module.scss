@@ -1,0 +1,83 @@
+@use '@/styles/variables.scss' as *;
+
+.container {
+  min-height: 100vh;
+  background-color: $color-bg-page;
+  padding: $spacing-md $page-padding;
+}
+
+.header {
+  margin-bottom: $spacing-lg;
+}
+
+.title {
+  font-size: $font-size-xxl;
+  font-weight: $font-weight-bold;
+  color: $color-text-primary;
+  display: block;
+  margin-bottom: $spacing-xs;
+}
+
+.subtitle {
+  font-size: $font-size-sm;
+  color: $color-text-tertiary;
+}
+
+.eraSection {
+  margin-bottom: $spacing-xl;
+}
+
+.eraTitle {
+  display: flex;
+  align-items: center;
+  margin-bottom: $spacing-lg;
+}
+
+.eraBadge {
+  background: linear-gradient(135deg, $color-primary 0%, $color-primary-light 100%);
+  padding: 12rpx 32rpx;
+  border-radius: $radius-button;
+  margin-right: $spacing-md;
+}
+
+.eraBadgeText {
+  font-size: $font-size-md;
+  font-weight: $font-weight-semibold;
+  color: $color-text-white;
+}
+
+.eraCount {
+  font-size: $font-size-sm;
+  color: $color-text-tertiary;
+}
+
+.eraItems {
+  margin-left: 48rpx;
+}
+
+.emptyState {
+  @include flex-center;
+  flex-direction: column;
+  padding: $spacing-xl * 2 0;
+}
+
+.emptyIcon {
+  width: 200rpx;
+  height: 200rpx;
+  background-color: $color-bg-hover;
+  border-radius: $radius-round;
+  margin-bottom: $spacing-lg;
+  @include flex-center;
+  opacity: 0.5;
+}
+
+.emptyText {
+  font-size: $font-size-md;
+  color: $color-text-tertiary;
+  margin-bottom: $spacing-sm;
+}
+
+.emptySubtext {
+  font-size: $font-size-sm;
+  color: $color-text-disabled;
+}

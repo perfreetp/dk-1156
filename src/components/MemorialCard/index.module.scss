@@ -1,0 +1,120 @@
+@use '@/styles/variables.scss' as *;
+
+.card {
+  background: linear-gradient(180deg, #FFF8F0 0%, #FFFFFF 100%);
+  border-radius: $radius-xl;
+  overflow: hidden;
+  box-shadow: $shadow-popup;
+  border: 2rpx solid $color-border;
+}
+
+.header {
+  padding: $spacing-md;
+  display: flex;
+  justify-content: center;
+}
+
+.badge {
+  background-color: $color-primary;
+  padding: 8rpx 32rpx;
+  border-radius: $radius-button;
+}
+
+.badgeText {
+  font-size: $font-size-sm;
+  color: $color-text-white;
+  font-weight: $font-weight-medium;
+}
+
+.mainImage {
+  width: 100%;
+  height: 500rpx;
+  background-color: $color-bg-hover;
+}
+
+.info {
+  padding: $spacing-lg;
+}
+
+.name {
+  font-size: $font-size-xxl;
+  font-weight: $font-weight-bold;
+  color: $color-text-primary;
+  text-align: center;
+  margin-bottom: $spacing-lg;
+}
+
+.row {
+  display: flex;
+  margin-bottom: $spacing-md;
+}
+
+.item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.label {
+  font-size: $font-size-sm;
+  color: $color-text-tertiary;
+  margin-bottom: 4rpx;
+}
+
+.value {
+  font-size: $font-size-md;
+  color: $color-text-primary;
+  font-weight: $font-weight-medium;
+}
+
+.story {
+  margin-top: $spacing-md;
+  padding-top: $spacing-md;
+  border-top: 1rpx solid $color-divider;
+}
+
+.storyLabel {
+  font-size: $font-size-sm;
+  color: $color-text-tertiary;
+  margin-bottom: $spacing-sm;
+  display: block;
+}
+
+.storyContent {
+  font-size: $font-size-md;
+  color: $color-text-secondary;
+  line-height: $line-height-loose;
+}
+
+.footer {
+  margin-top: $spacing-lg;
+  text-align: center;
+  padding-top: $spacing-md;
+  border-top: 1rpx dashed $color-border;
+}
+
+.date {
+  font-size: $font-size-xs;
+  color: $color-text-tertiary;
+}
+
+.ornament {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: $spacing-lg;
+  background-color: $color-bg-warm;
+}
+
+.ornamentLine {
+  width: 80rpx;
+  height: 2rpx;
+  background-color: $color-primary-light;
+}
+
+.ornamentText {
+  font-size: $font-size-sm;
+  color: $color-primary;
+  margin: 0 $spacing-md;
+  font-weight: $font-weight-medium;
+}

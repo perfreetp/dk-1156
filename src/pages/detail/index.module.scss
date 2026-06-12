@@ -1,0 +1,262 @@
+@use '@/styles/variables.scss' as *;
+
+.container {
+  min-height: 100vh;
+  background-color: $color-bg-page;
+  padding-bottom: 200rpx;
+}
+
+.mainImage {
+  width: 100%;
+  height: 600rpx;
+  background-color: $color-bg-hover;
+}
+
+.infoSection {
+  background-color: $color-bg-card;
+  margin: $spacing-md;
+  border-radius: $radius-lg;
+  padding: $spacing-lg;
+  box-shadow: $shadow-card;
+}
+
+.name {
+  font-size: $font-size-xxl;
+  font-weight: $font-weight-bold;
+  color: $color-text-primary;
+  margin-bottom: $spacing-md;
+  display: block;
+}
+
+.metaRow {
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: $spacing-md;
+}
+
+.metaItem {
+  display: flex;
+  align-items: center;
+  margin-right: $spacing-lg;
+  margin-bottom: $spacing-sm;
+}
+
+.metaIcon {
+  font-size: $font-size-sm;
+  margin-right: 8rpx;
+}
+
+.metaLabel {
+  font-size: $font-size-sm;
+  color: $color-text-tertiary;
+  margin-right: 8rpx;
+}
+
+.metaValue {
+  font-size: $font-size-sm;
+  color: $color-text-primary;
+  font-weight: $font-weight-medium;
+}
+
+.damageBadge {
+  display: inline-flex;
+  align-items: center;
+  padding: 6rpx 16rpx;
+  border-radius: $radius-round;
+  margin-left: $spacing-sm;
+}
+
+.damageBadgeNone { background-color: #E8F5E9; }
+.damageBadgeLight { background-color: #FFF3E0; }
+.damageBadgeMedium { background-color: #FFEBEE; }
+.damageBadgeHeavy { background-color: #FFEBEE; }
+
+.damageBadgeText {
+  font-size: $font-size-xs;
+  font-weight: $font-weight-medium;
+}
+
+.damageTextNone { color: #4CAF50; }
+.damageTextLight { color: #FF9800; }
+.damageTextMedium { color: #E07B54; }
+.damageTextHeavy { color: #F44336; }
+
+.storySection {
+  background-color: $color-bg-card;
+  margin: 0 $spacing-md $spacing-md;
+  border-radius: $radius-lg;
+  padding: $spacing-lg;
+  box-shadow: $shadow-card;
+}
+
+.storyTitle {
+  font-size: $font-size-lg;
+  font-weight: $font-weight-semibold;
+  color: $color-text-primary;
+  margin-bottom: $spacing-md;
+  display: flex;
+  align-items: center;
+}
+
+.storyTitleIcon {
+  margin-right: $spacing-xs;
+}
+
+.storyContent {
+  font-size: $font-size-md;
+  color: $color-text-secondary;
+  line-height: $line-height-loose;
+}
+
+.detailImagesSection {
+  background-color: $color-bg-card;
+  margin: 0 $spacing-md $spacing-md;
+  border-radius: $radius-lg;
+  padding: $spacing-lg;
+  box-shadow: $shadow-card;
+}
+
+.detailImagesTitle {
+  font-size: $font-size-lg;
+  font-weight: $font-weight-semibold;
+  color: $color-text-primary;
+  margin-bottom: $spacing-md;
+  display: block;
+}
+
+.detailImages {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $spacing-sm;
+}
+
+.detailImage {
+  width: 200rpx;
+  height: 200rpx;
+  border-radius: $radius-md;
+  background-color: $color-bg-hover;
+}
+
+.commentsSection {
+  background-color: $color-bg-card;
+  margin: 0 $spacing-md $spacing-md;
+  border-radius: $radius-lg;
+  padding: $spacing-lg;
+  box-shadow: $shadow-card;
+}
+
+.commentsTitle {
+  font-size: $font-size-lg;
+  font-weight: $font-weight-semibold;
+  color: $color-text-primary;
+  margin-bottom: $spacing-md;
+  display: block;
+}
+
+.commentItem {
+  display: flex;
+  padding: $spacing-md 0;
+  border-bottom: 1rpx solid $color-divider;
+
+  &:last-child {
+    border-bottom: none;
+  }
+}
+
+.commentAvatar {
+  width: 72rpx;
+  height: 72rpx;
+  border-radius: $radius-round;
+  background-color: $color-bg-hover;
+  margin-right: $spacing-md;
+}
+
+.commentContent {
+  flex: 1;
+}
+
+.commentHeader {
+  display: flex;
+  align-items: center;
+  margin-bottom: 4rpx;
+}
+
+.commentName {
+  font-size: $font-size-md;
+  font-weight: $font-weight-medium;
+  color: $color-text-primary;
+  margin-right: $spacing-sm;
+}
+
+.commentDate {
+  font-size: $font-size-xs;
+  color: $color-text-tertiary;
+}
+
+.commentText {
+  font-size: $font-size-sm;
+  color: $color-text-secondary;
+  line-height: $line-height-normal;
+}
+
+.addCommentBtn {
+  margin-top: $spacing-md;
+  padding: $spacing-md;
+  background-color: $color-bg-page;
+  border-radius: $radius-md;
+  @include flex-center;
+}
+
+.addCommentText {
+  font-size: $font-size-sm;
+  color: $color-text-tertiary;
+}
+
+.emptyComments {
+  padding: $spacing-lg;
+  text-align: center;
+}
+
+.emptyCommentsText {
+  font-size: $font-size-sm;
+  color: $color-text-tertiary;
+}
+
+.bottomBar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: $color-bg-card;
+  padding: $spacing-md $page-padding;
+  padding-bottom: calc($spacing-md + env(safe-area-inset-bottom));
+  box-shadow: 0 -4rpx 20rpx rgba(0, 0, 0, 0.05);
+  display: flex;
+  gap: $spacing-md;
+}
+
+.actionBtn {
+  flex: 1;
+  height: $button-height-lg;
+  border-radius: $radius-button;
+  @include flex-center;
+
+  &:active {
+    opacity: 0.9;
+    transform: scale(0.98);
+  }
+}
+
+.shareBtn {
+  background-color: $color-primary;
+}
+
+.cardBtn {
+  background: linear-gradient(135deg, $color-accent 0%, $color-accent-light 100%);
+}
+
+.actionText {
+  font-size: $font-size-md;
+  font-weight: $font-weight-medium;
+  color: $color-text-white;
+}

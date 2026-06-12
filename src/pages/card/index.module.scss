@@ -1,0 +1,63 @@
+@use '@/styles/variables.scss' as *;
+
+.container {
+  min-height: 100vh;
+  background-color: $color-bg-page;
+  padding: $spacing-md $page-padding;
+}
+
+.preview {
+  background-color: $color-bg-card;
+  border-radius: $radius-lg;
+  padding: $spacing-md;
+  box-shadow: $shadow-card;
+  margin-bottom: $spacing-lg;
+}
+
+.previewCard {
+  width: 100%;
+}
+
+.actions {
+  display: flex;
+  gap: $spacing-md;
+  margin-bottom: $spacing-lg;
+}
+
+.actionBtn {
+  flex: 1;
+  height: $button-height-lg;
+  border-radius: $radius-button;
+  @include flex-center;
+
+  &:active {
+    opacity: 0.9;
+    transform: scale(0.98);
+  }
+}
+
+.saveBtn {
+  background-color: $color-primary;
+}
+
+.shareBtn {
+  background: linear-gradient(135deg, $color-accent 0%, $color-accent-light 100%);
+}
+
+.actionText {
+  font-size: $font-size-md;
+  font-weight: $font-weight-medium;
+  color: $color-text-white;
+}
+
+.tip {
+  text-align: center;
+  padding: $spacing-md;
+  background-color: $color-bg-warm;
+  border-radius: $radius-md;
+}
+
+.tipText {
+  font-size: $font-size-sm;
+  color: $color-text-secondary;
+}

@@ -1,0 +1,193 @@
+@use '@/styles/variables.scss' as *;
+
+.container {
+  min-height: 100vh;
+  background-color: $color-bg-page;
+  padding: $spacing-md $page-padding;
+}
+
+.header {
+  background: linear-gradient(135deg, $color-primary 0%, $color-primary-light 100%);
+  border-radius: $radius-xl;
+  padding: $spacing-xl;
+  margin-bottom: $spacing-lg;
+}
+
+.profileInfo {
+  display: flex;
+  align-items: center;
+  margin-bottom: $spacing-lg;
+}
+
+.avatar {
+  width: 120rpx;
+  height: 120rpx;
+  border-radius: $radius-round;
+  background-color: rgba(255, 255, 255, 0.2);
+  margin-right: $spacing-md;
+  border: 4rpx solid rgba(255, 255, 255, 0.3);
+}
+
+.profileName {
+  font-size: $font-size-xl;
+  font-weight: $font-weight-semibold;
+  color: $color-text-white;
+  margin-bottom: 4rpx;
+  display: block;
+}
+
+.profileRelation {
+  font-size: $font-size-sm;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.statsRow {
+  display: flex;
+  justify-content: space-around;
+  padding-top: $spacing-md;
+  border-top: 1rpx solid rgba(255, 255, 255, 0.2);
+}
+
+.statItem {
+  text-align: center;
+}
+
+.statValue {
+  font-size: $font-size-xxl;
+  font-weight: $font-weight-bold;
+  color: $color-text-white;
+  display: block;
+  margin-bottom: 4rpx;
+}
+
+.statLabel {
+  font-size: $font-size-xs;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.section {
+  background-color: $color-bg-card;
+  border-radius: $radius-lg;
+  margin-bottom: $spacing-md;
+  overflow: hidden;
+  box-shadow: $shadow-card;
+}
+
+.sectionTitle {
+  font-size: $font-size-md;
+  font-weight: $font-weight-semibold;
+  color: $color-text-primary;
+  padding: $spacing-md $spacing-lg;
+  border-bottom: 1rpx solid $color-divider;
+}
+
+.menuItem {
+  display: flex;
+  align-items: center;
+  padding: $spacing-md $spacing-lg;
+  border-bottom: 1rpx solid $color-divider;
+  transition: all $transition-fast;
+
+  &:last-child {
+    border-bottom: none;
+  }
+
+  &:active {
+    background-color: $color-bg-hover;
+  }
+}
+
+.menuIcon {
+  width: 48rpx;
+  height: 48rpx;
+  background-color: $color-bg-warm;
+  border-radius: $radius-md;
+  @include flex-center;
+  margin-right: $spacing-md;
+}
+
+.menuIconText {
+  font-size: 28rpx;
+}
+
+.menuContent {
+  flex: 1;
+}
+
+.menuLabel {
+  font-size: $font-size-md;
+  color: $color-text-primary;
+  display: block;
+  margin-bottom: 2rpx;
+}
+
+.menuDesc {
+  font-size: $font-size-xs;
+  color: $color-text-tertiary;
+}
+
+.menuArrow {
+  font-size: $font-size-md;
+  color: $color-text-tertiary;
+}
+
+.badge {
+  background-color: $color-accent;
+  padding: 4rpx 16rpx;
+  border-radius: $radius-round;
+  margin-right: $spacing-sm;
+}
+
+.badgeText {
+  font-size: $font-size-xs;
+  color: $color-text-white;
+}
+
+.reminderList {
+  padding: $spacing-sm $spacing-lg;
+}
+
+.reminderItem {
+  display: flex;
+  align-items: center;
+  padding: $spacing-sm 0;
+  border-bottom: 1rpx solid $color-divider;
+
+  &:last-child {
+    border-bottom: none;
+  }
+}
+
+.reminderImage {
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: $radius-md;
+  background-color: $color-bg-hover;
+  margin-right: $spacing-md;
+}
+
+.reminderInfo {
+  flex: 1;
+}
+
+.reminderName {
+  font-size: $font-size-md;
+  color: $color-text-primary;
+  margin-bottom: 4rpx;
+  display: block;
+}
+
+.reminderDate {
+  font-size: $font-size-xs;
+  color: $color-accent;
+}
+
+.emptyReminder {
+  padding: $spacing-lg;
+  text-align: center;
+}
+
+.emptyReminderText {
+  font-size: $font-size-sm;
+  color: $color-text-tertiary;
+}

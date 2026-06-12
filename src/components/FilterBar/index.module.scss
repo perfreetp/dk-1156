@@ -1,0 +1,117 @@
+@use '@/styles/variables.scss' as *;
+
+.container {
+  background-color: $color-bg-card;
+  border-radius: $radius-lg;
+  padding: $spacing-md;
+  margin-bottom: $spacing-md;
+  box-shadow: $shadow-card;
+}
+
+.searchBar {
+  margin-bottom: $spacing-sm;
+}
+
+.searchInput {
+  display: flex;
+  align-items: center;
+  background-color: $color-bg-page;
+  border-radius: $radius-button;
+  padding: 16rpx $spacing-md;
+}
+
+.searchIcon {
+  font-size: $font-size-sm;
+  color: $color-text-tertiary;
+  margin-right: $spacing-sm;
+}
+
+.inputWrapper {
+  flex: 1;
+}
+
+.input {
+  font-size: $font-size-md;
+  color: $color-text-primary;
+  width: 100%;
+}
+
+.filterToggle {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: $spacing-xs 0;
+}
+
+.filterTitle {
+  font-size: $font-size-md;
+  font-weight: $font-weight-medium;
+  color: $color-text-primary;
+}
+
+.toggleIcon {
+  font-size: $font-size-sm;
+  color: $color-primary;
+}
+
+.filterPanel {
+  margin-top: $spacing-md;
+  padding-top: $spacing-md;
+  border-top: 1rpx solid $color-divider;
+}
+
+.filterSection {
+  margin-bottom: $spacing-md;
+}
+
+.filterLabel {
+  font-size: $font-size-sm;
+  color: $color-text-secondary;
+  margin-bottom: $spacing-sm;
+  display: block;
+}
+
+.tagScroll {
+  width: 100%;
+}
+
+.tagList {
+  display: flex;
+  gap: $spacing-sm;
+}
+
+.tag {
+  padding: 12rpx 24rpx;
+  background-color: $color-bg-page;
+  border-radius: $radius-button;
+  white-space: nowrap;
+  transition: all $transition-fast;
+
+  &:active {
+    opacity: 0.8;
+  }
+}
+
+.tagActive {
+  background-color: $color-primary;
+}
+
+.tagText {
+  font-size: $font-size-sm;
+  color: $color-text-secondary;
+}
+
+.tagTextActive {
+  color: $color-text-white;
+}
+
+.clearBtn {
+  text-align: center;
+  padding: $spacing-sm;
+  margin-top: $spacing-sm;
+}
+
+.clearText {
+  font-size: $font-size-sm;
+  color: $color-accent;
+}
