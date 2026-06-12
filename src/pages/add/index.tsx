@@ -22,16 +22,52 @@ const AddPage: React.FC = () => {
     viewPermission: 'family' as 'all' | 'family' | 'private'
   });
 
-  const handleChooseImage = () => {
+  const [isUploading, setIsUploading] = useState(false);
+
+  const saveImageToLocal = (tempFilePath: string): Promise<string> => {
+    return new Promise((resolve, reject) => {
+      const timestamp = Date.now();
+      const randomStr = Math.random().toString(36).substr(2, 9);
+      const fileName = `img_${timestamp}_${randomStr}.jpg`;
+
+      Taro.getFileSystemManager().saveFile({
+        tempFilePath: tempFilePath,
+        filePath: `${Taro.env.USER_DATA_PATH}/${fileName}`,
+        success: (res) => {
+          resolve(res.savedFilePath);
+        },
+        fail: (err) => {
+          console.error('[Image] Save failed:', err);
+          reject(err);
+        }
+      });
+    });
+  };
+
+  const handleChooseImage = async () => {
     Taro.chooseImage({
       count: 1,
       sizeType: ['compressed'],
       sourceType: ['album', 'camera'],
-      success: (res) => {
-        setFormData(prev => ({
-          ...prev,
-          mainImage: res.tempFilePaths[0]
-        }));
+      success: async (res) => {
+        const tempPath = res.tempFilePaths[0];
+        setIsUploading(true);
+        try {
+          const savedPath = await saveImageToLocal(tempPath);
+          setFormData(prev => ({
+            ...prev,
+            mainImage: savedPath
+          }));
+          Taro.showToast({ title: '图片已保存', icon: 'success' });
+        } catch (e) {
+          console.error('[Image] Main image save error:', e);
+          setFormData(prev => ({
+            ...prev,
+            mainImage: tempPath
+          }));
+        } finally {
+          setIsUploading(false);
+        }
       },
       fail: () => {
         Taro.showToast({ title: '请选择图片', icon: 'none' });
@@ -39,7 +75,7 @@ const AddPage: React.FC = () => {
     });
   };
 
-  const handleChooseDetailImage = () => {
+  const handleChooseDetailImage = async () => {
     const remainCount = 5 - formData.detailImages.length;
     if (remainCount <= 0) {
       Taro.showToast({ title: '最多5张细节图', icon: 'none' });
@@ -50,11 +86,27 @@ const AddPage: React.FC = () => {
       count: remainCount,
       sizeType: ['compressed'],
       sourceType: ['album', 'camera'],
-      success: (res) => {
-        setFormData(prev => ({
-          ...prev,
-          detailImages: [...prev.detailImages, ...res.tempFilePaths].slice(0, 5)
-        }));
+      success: async (res) => {
+        setIsUploading(true);
+        try {
+          const savedPaths: string[] = [];
+          for (const tempPath of res.tempFilePaths) {
+            try {
+              const savedPath = await saveImageToLocal(tempPath);
+              savedPaths.push(savedPath);
+            } catch (e) {
+              console.error('[Image] Detail image save error:', e);
+              savedPaths.push(tempPath);
+            }
+          }
+          setFormData(prev => ({
+            ...prev,
+            detailImages: [...prev.detailImages, ...savedPaths].slice(0, 5)
+          }));
+          Taro.showToast({ title: '图片已保存', icon: 'success' });
+        } finally {
+          setIsUploading(false);
+        }
       },
       fail: () => {
         Taro.showToast({ title: '请选择图片', icon: 'none' });
@@ -119,6 +171,11 @@ const AddPage: React.FC = () => {
                 <Text className={styles.addIconLabel}>点击上传主图</Text>
               </View>
             )}
+            {isUploading && (
+              <View className={styles.uploadingOverlay}>
+                <Text className={styles.uploadingText}>保存中...</Text>
+              </View>
+            )}
           </View>
 
           <View className={styles.detailImages}>
@@ -140,7 +197,7 @@ const AddPage: React.FC = () => {
               </View>
             )}
           </View>
-          <Text className={styles.imageHint}>可上传最多5张细节图</Text>
+          <Text className={styles.imageHint}>可上传最多5张细节图，图片会永久保存</Text>
         </View>
 
         <View className={styles.section}>

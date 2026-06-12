@@ -23,7 +23,7 @@ const DetailPage: React.FC = () => {
 
   const handleShare = () => {
     if (!item) return;
-    Taro.navigateTo({ url: `/pages/share/index?ids=${item.id}` });
+    Taro.navigateTo({ url: `/pages/share-result/index?ids=${item.id}` });
   };
 
   const handleMakeCard = () => {

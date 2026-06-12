@@ -59,6 +59,18 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
 
   const currentMember = members.find(m => m.id === currentMemberId) || members[0];
 
+  const canViewItem = useCallback((item: Item, viewerId: string): boolean => {
+    if (item.viewPermission === 'all') return true;
+    if (item.viewPermission === 'family') {
+      return item.familyMembers.includes(viewerId) || item.createdBy === viewerId;
+    }
+    return item.createdBy === viewerId;
+  }, []);
+
+  const getVisibleItems = useCallback((): Item[] => {
+    return items.filter(item => canViewItem(item, currentMemberId));
+  }, [items, currentMemberId, canViewItem]);
+
   const addItem = useCallback((itemData: Omit<Item, 'id' | 'createdAt' | 'updatedAt'>): Item => {
     const newItem: Item = {
       ...itemData,
@@ -123,7 +135,7 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
   }, [items]);
 
   const getFilteredItems = useCallback((): Item[] => {
-    let result = [...items];
+    let result = getVisibleItems();
 
     if (filter.era) {
       result = result.filter(item => item.era === filter.era);
@@ -144,17 +156,7 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
     }
 
     return result;
-  }, [items, filter]);
-
-  const getVisibleItems = useCallback((): Item[] => {
-    return items.filter(item => {
-      if (item.viewPermission === 'all') return true;
-      if (item.viewPermission === 'family') {
-        return item.familyMembers.includes(currentMemberId) || item.createdBy === currentMemberId;
-      }
-      return item.createdBy === currentMemberId;
-    });
-  }, [items, currentMemberId]);
+  }, [filter, getVisibleItems]);
 
   const getTimelineData = useCallback((): { era: string; label: string; items: Item[] }[] => {
     const visibleItems = getVisibleItems();
@@ -186,10 +188,12 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
   }, [getVisibleItems]);
 
   const getMemberItems = useCallback((memberId: string): Item[] => {
-    return items.filter(item =>
-      item.familyMembers.includes(memberId) || item.createdBy === memberId
-    );
-  }, [items]);
+    return items.filter(item => {
+      const isRelated = item.familyMembers.includes(memberId) || item.createdBy === memberId;
+      if (!isRelated) return false;
+      return canViewItem(item, currentMemberId);
+    });
+  }, [items, currentMemberId, canViewItem]);
 
   const addComment = useCallback((itemId: string, content: string): void => {
     const item = items.find(i => i.id === itemId);

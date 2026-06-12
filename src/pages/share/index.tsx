@@ -42,21 +42,9 @@ const SharePage: React.FC = () => {
       return;
     }
 
-    const selectedItems = items.filter(i => selectedIds.has(i.id));
-    const shareTitle = selectedItems.length === 1
-      ? `来看看这件老物件：${selectedItems[0].name}`
-      : `来看看 ${selectedItems.length} 件老物件档案`;
-
-    Taro.showModal({
-      title: '生成分享链接',
-      content: `${shareTitle}\n\n分享链接已生成，您可以复制链接发送给亲友。`,
-      confirmText: '确定',
-      success: () => {
-        Taro.showToast({ title: '分享链接已生成', icon: 'success' });
-        setTimeout(() => {
-          Taro.navigateBack();
-        }, 1500);
-      }
+    const idsString = Array.from(selectedIds).join(',');
+    Taro.navigateTo({
+      url: `/pages/share-result/index?ids=${idsString}`
     });
   };
 
@@ -117,7 +105,7 @@ const SharePage: React.FC = () => {
           已选择 <Text className={styles.selectedCountText}>{selectedIds.size}</Text> 件
         </Text>
         <View className={styles.actionBtn} onClick={handleShare}>
-          <Text className={styles.actionText}>生成分享链接</Text>
+          <Text className={styles.actionText}>生成分享</Text>
         </View>
       </View>
     </ScrollView>
